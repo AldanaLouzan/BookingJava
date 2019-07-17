@@ -1,6 +1,6 @@
-package bookingclass.controllers;
+package bookingclass.controller;
 
-import bookingclass.entities.Student;
+import bookingclass.entity.Student;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,20 +9,18 @@ import java.util.Map;
  * @author Aldana
  */
 public class StudentController {
-
+/**
     Map<Integer, Student> studentRegistered = new HashMap();
 
     public void StudentTable(Student st) {
-        Student s = new Student();
-        s = st;
-        int studentID;
-        if (s.getID() == 0) {
-            studentID = this.StudentID();
-            s.setID(studentID);
+        
+        if (st.getId() == 0) {
+            int  studentID = this.StudentID();
+            st.setID(studentID);
 
         }
 
-        studentRegistered.put(s.getID(), s);
+        studentRegistered.put(st.getId(), st);
 
     }
 
@@ -40,5 +38,5 @@ public class StudentController {
         return ID;
 
     }
-
+*/
 }

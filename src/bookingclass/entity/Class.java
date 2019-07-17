@@ -1,4 +1,4 @@
-package bookingclass.entities;
+package bookingclass.entity;
 
 import java.util.Date;
 
@@ -7,7 +7,7 @@ import java.util.Date;
  * @author Aldana
  */
 public class Class {
-    private int ID;
+    private int idClass;
     private Date date;
     private int time;
     private String type;
@@ -15,19 +15,19 @@ public class Class {
     public Class() {
     }
 
-    public Class(int ID, Date date, int time, String type) {
-        this.ID = ID;
+    public Class(int id, Date date, int time, String type) {
+        this.idClass = id;
         this.date = date;
         this.time = time;
         this.type = type;
     }
 
-    public int getID() {
-        return ID;
+    public int getId() {
+        return idClass;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setId(int id) {
+        this.idClass = id;
     }
 
     public Date getDate() {

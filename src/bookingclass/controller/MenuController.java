@@ -1,7 +1,10 @@
-package bookingclass.controllers;
+package bookingclass.controller;
 
-import bookingclass.entities.Parent;
-import bookingclass.entities.Student;
+import bookingclass.db.CRUD;
+import bookingclass.db.DBConnection;
+import bookingclass.entity.Parent;
+import bookingclass.entity.Student;
+import java.sql.Connection;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -9,23 +12,31 @@ import java.time.Period;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
+import viewInterface.User;
 
 
 /**
  *
  * @author Aldana
  */
-public class MenuController {
+public class MenuController implements User {
     
-    StudentController sc = new StudentController();
+    //StudentController sc = new StudentController();
+    
+    DBConnection db = new DBConnection ();
+    CRUD data = new CRUD();
     Scanner scan = new Scanner(System.in);    
     
-    public void registerForm () throws ParseException{
-        
+
+    @Override
+    public void registration () throws ParseException{
         Student st = new Student(); 
         Parent p = new Parent();
-        String name, surname, phone, bdate, college, level, email, pass;
+        
+        String name, surname, phone, birth, college, level, email, pass;
         int age;
+        Date bdate;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         
         System.out.println("Please complete the following fields");
         
@@ -38,12 +49,13 @@ public class MenuController {
         st.setSurname(surname);
         
         System.out.println("> Birth date (yyyy/MM/dd): ");
-        bdate = scan.nextLine();
+        birth = scan.nextLine();
+        bdate = sdf.parse(birth);
         st.setBirth(bdate);
         age = this.CalculateAge(bdate);
         st.setAge(age);
         if (age < 18){
-            p = this.ParentDetails();
+            p = this.parentDetails();
             st.setParent(p);
         }
         
@@ -67,20 +79,22 @@ public class MenuController {
         pass = scan.nextLine();
         st.setPassword(pass);
         
-        sc.StudentTable(st);
+        
+        //sc.StudentTable(st);
+        getConnection
+        data.insertStudentUnder18(con, st);
+        
         System.out.println("You have been successfully register");
         
         
         
     }
     
-    public int CalculateAge (String bdate) throws ParseException{
+    public int CalculateAge (Date bdate) throws ParseException{
         int age;
         
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-        Date d = sdf.parse(bdate);
         Calendar c = Calendar.getInstance();
-        c.setTime(d);
+        c.setTime(bdate);
         int year = c.get(Calendar.YEAR);
         int month = c.get(Calendar.MONTH) + 1;
         int date = c.get(Calendar.DATE);
@@ -93,7 +107,7 @@ public class MenuController {
         
     }
     
-    public Parent ParentDetails(){
+    public Parent parentDetails(){
         Parent p = new Parent();
         String parentName, parentSurname, parentPhone;
         
@@ -116,13 +130,13 @@ public class MenuController {
         
     }
     
-    public void LogIn(){
+    public void logIn(){
         System.out.print("User Name: ");
         System.out.print("Password: ");
     
     }
     
-    public void LogInMenu(){
+    public void logInMenu(){
         System.out.println("Please select an option");
         System.out.println("1) Metodology");
         System.out.println("2) Book a class");

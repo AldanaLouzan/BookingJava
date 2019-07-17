@@ -1,4 +1,4 @@
-package bookingclass.entities;
+package bookingclass.entity;
 
 /**
  *

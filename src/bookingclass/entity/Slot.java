@@ -1,12 +1,12 @@
 
-package bookingclass.entities;
+package bookingclass.entity;
 
 /**
  *
  * @author Aldana
  */
 public class Slot {
-    private int ID;
+    private int idSlot;
     private Student student;
     private String subject;
     private int price;
@@ -17,8 +17,8 @@ public class Slot {
     public Slot() {
     }
 
-    public Slot(int ID, Student student, String subject, int price, String status, Class classes, String comment) {
-        this.ID = ID;
+    public Slot(int id, Student student, String subject, int price, String status, Class classes, String comment) {
+        this.idSlot = id;
         this.student = student;
         this.subject = subject;
         this.price = price;
@@ -27,12 +27,12 @@ public class Slot {
         this.comment = comment;
     }
     
-    public int getID() {
-        return ID;
+    public int getId() {
+        return idSlot;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setId(int id) {
+        this.idSlot = id;
     }
 
     public Student getStudent() {

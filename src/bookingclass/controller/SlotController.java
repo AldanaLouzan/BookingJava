@@ -1,4 +1,4 @@
-package bookingclass.controllers;
+package bookingclass.controller;
 
 /**
  *

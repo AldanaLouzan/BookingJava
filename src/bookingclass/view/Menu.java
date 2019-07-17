@@ -1,11 +1,7 @@
-package view;
+package bookingclass.view;
 
-import bookingclass.controllers.MenuController;
-import bookingclass.controllers.StudentController;
-import bookingclass.entities.Parent;
-import bookingclass.entities.Student;
+import bookingclass.controller.MenuController;
 import java.text.ParseException;
-import java.util.Date;
 import java.util.Scanner;
 
 /**
@@ -16,7 +12,7 @@ public class Menu {
 
     public Menu() throws ParseException {
         MenuController mc = new MenuController();
-        Student st = new Student();
+        
         
         String choice = null;
         Scanner scan = new Scanner(System.in);
@@ -31,12 +27,12 @@ public class Menu {
             choice = scan.nextLine();
             switch (choice) {
                 case "1": {
-                    mc.registerForm();  
+                    mc.registration();  
                     new Menu();;
                     break;
                 }
                 case "2": {
-                    mc.LogIn();
+                    mc.logIn();
                     ;
                     break;
                 }           

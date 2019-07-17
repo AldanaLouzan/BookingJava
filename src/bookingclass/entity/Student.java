@@ -1,4 +1,7 @@
-package bookingclass.entities;
+package bookingclass.entity;
+
+import java.util.Date;
+
 
 
 /**
@@ -7,11 +10,11 @@ package bookingclass.entities;
  */
 public class Student extends Person {
 
-    private int ID;
+    private int idStudent;
     private String email;
     private String password;
     private String phone;
-    private String birth;
+    private Date birth;
     private int age;
     private String college;
     private String level;
@@ -21,9 +24,9 @@ public class Student extends Person {
     }
     
     //Constructor without parent attibute, as not all the students must have parents contanct details
-    public Student(int ID, String email, String password, String phone, String birth, int age, String college, String level, String name, String surname) {
+    public Student(int id, String email, String password, String phone, Date birth, int age, String college, String level, String name, String surname) {
         super(name, surname);
-        this.ID = ID;
+        this.idStudent = id;
         this.email = email;
         this.password = password;
         this.phone = phone;
@@ -33,7 +36,7 @@ public class Student extends Person {
         this.level = level;
     }
 
-    public Student(String email, String password, String phone, String birth, int age, String college, String level, Parent parent, String name, String surname) {
+    public Student(String email, String password, String phone, Date birth, int age, String college, String level, Parent parent, String name, String surname) {
         super(name, surname);
         this.email = email;
         this.password = password;
@@ -47,9 +50,9 @@ public class Student extends Person {
     
     
 
-    public Student(int ID, String email, String password, String phone, String birth, int age, String college, String level, Parent parent, String name, String surname) {
+    public Student(int id, String email, String password, String phone, Date birth, int age, String college, String level, Parent parent, String name, String surname) {
         super(name, surname);
-        this.ID = ID;
+        this.idStudent = id;
         this.email = email;
         this.password = password;
         this.phone = phone;
@@ -60,12 +63,12 @@ public class Student extends Person {
         this.parent = parent;
     }
 
-    public int getID() {
-        return ID;
+    public int getId() {
+        return idStudent;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setID(int id) {
+        this.idStudent = id;
     }
 
     public String getEmail() {
@@ -92,11 +95,11 @@ public class Student extends Person {
         this.phone = phone;
     }
 
-    public String getBirth() {
+    public Date getBirth() {
         return birth;
     }
 
-    public void setBirth(String birth) {
+    public void setBirth(Date birth) {
         this.birth = birth;
     }
 
