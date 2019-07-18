@@ -15,11 +15,13 @@ public class DBConnection {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection(url, user, pass);
             connection.setAutoCommit(false);
+            System.out.println("Connection successful");
         } catch (SQLException ex) {
             System.out.println("Database exception: " + ex.getMessage());
         } catch (Exception ex) {
             System.out.println("General exception: " + ex.getMessage());
-        } finally {
+        } 
+        finally {
             if (connection != null) {
                 try {
                     connection.close();

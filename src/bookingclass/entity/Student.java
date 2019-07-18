@@ -14,7 +14,7 @@ public class Student extends Person {
     private String email;
     private String password;
     private String phone;
-    private Date birth;
+    private String birth;
     private int age;
     private String college;
     private String level;
@@ -24,7 +24,7 @@ public class Student extends Person {
     }
     
     //Constructor without parent attibute, as not all the students must have parents contanct details
-    public Student(int id, String email, String password, String phone, Date birth, int age, String college, String level, String name, String surname) {
+    public Student(int id, String email, String password, String phone, String birth, int age, String college, String level, String name, String surname) {
         super(name, surname);
         this.idStudent = id;
         this.email = email;
@@ -36,7 +36,7 @@ public class Student extends Person {
         this.level = level;
     }
 
-    public Student(String email, String password, String phone, Date birth, int age, String college, String level, Parent parent, String name, String surname) {
+    public Student(String email, String password, String phone, String birth, int age, String college, String level, Parent parent, String name, String surname) {
         super(name, surname);
         this.email = email;
         this.password = password;
@@ -50,7 +50,7 @@ public class Student extends Person {
     
     
 
-    public Student(int id, String email, String password, String phone, Date birth, int age, String college, String level, Parent parent, String name, String surname) {
+    public Student(int id, String email, String password, String phone, String birth, int age, String college, String level, Parent parent, String name, String surname) {
         super(name, surname);
         this.idStudent = id;
         this.email = email;
@@ -95,11 +95,11 @@ public class Student extends Person {
         this.phone = phone;
     }
 
-    public Date getBirth() {
+    public String getBirth() {
         return birth;
     }
 
-    public void setBirth(Date birth) {
+    public void setBirth(String birth) {
         this.birth = birth;
     }
 

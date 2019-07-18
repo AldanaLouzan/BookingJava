@@ -1,5 +1,6 @@
 package bookingclass.controller;
 
+import bookingclass.db.CRUD;
 import bookingclass.entity.Student;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,8 +10,9 @@ import java.util.Map;
  * @author Aldana
  */
 public class StudentController {
-/**
+
     Map<Integer, Student> studentRegistered = new HashMap();
+    CRUD data = new CRUD();
 
     public void StudentTable(Student st) {
         
@@ -38,5 +40,14 @@ public class StudentController {
         return ID;
 
     }
-*/
+    
+    public void registerStudent (Student s){
+        if (s.getAge()< 18){
+            data.insertStudentUnder18(s);
+        }else{
+            data.insertStudentOver18(s);
+        }
+            
+    }
+
 }

@@ -23,8 +23,8 @@ public class MenuController implements User {
     
     //StudentController sc = new StudentController();
     
-    DBConnection db = new DBConnection ();
-    CRUD data = new CRUD();
+    StudentController sc = new StudentController ();
+
     Scanner scan = new Scanner(System.in);    
     
 
@@ -51,7 +51,7 @@ public class MenuController implements User {
         System.out.println("> Birth date (yyyy/MM/dd): ");
         birth = scan.nextLine();
         bdate = sdf.parse(birth);
-        st.setBirth(bdate);
+        st.setBirth(birth);
         age = this.CalculateAge(bdate);
         st.setAge(age);
         if (age < 18){
@@ -81,13 +81,8 @@ public class MenuController implements User {
         
         
         //sc.StudentTable(st);
-        getConnection
-        data.insertStudentUnder18(con, st);
-        
-        System.out.println("You have been successfully register");
-        
-        
-        
+        sc.registerStudent(st);
+     
     }
     
     public int CalculateAge (Date bdate) throws ParseException{

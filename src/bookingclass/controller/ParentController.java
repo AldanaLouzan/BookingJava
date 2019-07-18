@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class ParentController 
 {
-    /**
+    
     Map<Integer, Parent> parentRegistered = new HashMap();
     
     public void parentTable(Parent p) {
@@ -34,5 +34,5 @@ public class ParentController
 
         return ID;
 
-    }*/
+    }
 }

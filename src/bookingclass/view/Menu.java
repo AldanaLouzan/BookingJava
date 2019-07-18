@@ -28,7 +28,7 @@ public class Menu {
             switch (choice) {
                 case "1": {
                     mc.registration();  
-                    new Menu();;
+                    //new Menu();;
                     break;
                 }
                 case "2": {
