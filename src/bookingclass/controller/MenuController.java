@@ -36,7 +36,7 @@ public class MenuController implements User {
         String name, surname, phone, birth, college, level, email, pass;
         int age;
         Date bdate;
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         
         System.out.println("Please complete the following fields");
         
@@ -48,7 +48,7 @@ public class MenuController implements User {
         surname = scan.nextLine();
         st.setSurname(surname);
         
-        System.out.println("> Birth date (yyyy/MM/dd): ");
+        System.out.println("> Birth date (yyyy-MM-dd): ");
         birth = scan.nextLine();
         bdate = sdf.parse(birth);
         st.setBirth(birth);
