@@ -1,7 +1,7 @@
 package bookingclass.controller;
 
-import bookingclass.db.CRUD;
-import bookingclass.db.DBConnection;
+import dao.StudentDaoImpl;
+import bookingclass.connectionDb.DBConnection;
 import bookingclass.entity.Parent;
 import bookingclass.entity.Student;
 import java.sql.Connection;

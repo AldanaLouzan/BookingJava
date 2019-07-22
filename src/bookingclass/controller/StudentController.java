@@ -1,6 +1,6 @@
 package bookingclass.controller;
 
-import bookingclass.db.CRUD;
+import dao.StudentDaoImpl;
 import bookingclass.entity.Student;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,9 +12,9 @@ import java.util.Map;
 public class StudentController {
 
     Map<Integer, Student> studentRegistered = new HashMap();
-    CRUD data = new CRUD();
+    StudentDaoImpl data = new StudentDaoImpl();
 
-    public void StudentTable(Student st) {
+/**    public void StudentTable(Student st) {
         
         if (st.getId() == 0) {
             int  studentID = this.StudentID();
@@ -24,6 +24,7 @@ public class StudentController {
 
         studentRegistered.put(st.getId(), st);
 
+        
     }
 
     public int StudentID() {
@@ -39,7 +40,7 @@ public class StudentController {
             
         return ID;
 
-    }
+    }*/
     
     public void registerStudent (Student s){
         if (s.getAge()< 18){

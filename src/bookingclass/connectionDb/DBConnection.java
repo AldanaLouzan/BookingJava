@@ -1,10 +1,10 @@
-package bookingclass.db;
+package bookingclass.connectionDb;
 
 import java.sql.Connection;
 import java.sql.*;
  
 public class DBConnection {
-/**
+
     private static Connection connection = null;
     private static String url = "jdbc:mysql://localhost:3306/test";
     private static String user = "root";
@@ -33,6 +33,6 @@ public class DBConnection {
         return connection;
 
     }
-    */
+    
 
 }

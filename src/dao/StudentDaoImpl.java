@@ -1,4 +1,4 @@
-package bookingclass.db;
+package dao;
 
 //import static bookingclass.db.DBConnection.getConnection;
 import bookingclass.entity.Student;
@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
-public class CRUD
+public class StudentDaoImpl
         
 {
 
@@ -18,7 +18,7 @@ public class CRUD
     ResultSet rs;
     
     private static Connection connection = null;
-    private static String url = "jdbc:mysql://localhost:3306/booking_class";
+    private static String url = "jdbc:mysql://localhost:3306/emilyclasses";
     private static String user = "root";
     private static String pass = "";
 
@@ -33,7 +33,7 @@ public class CRUD
         } catch (Exception ex) {
             System.out.println("General exception: " + ex.getMessage());
         } 
-        /**finally {
+        /*finally {
             if (connection != null) {
                 try {
                     connection.close();
@@ -90,8 +90,7 @@ public class CRUD
     
         public void insertStudentOver18(Student st) {
         Connection con = null;
-        
-        String sql = "INSERT INTO STUDENT (idstudent, s_name, s_surname, phone, birth, email, age, college, level) "
+        String sql = "INSERT INTO STUDENT (idstudent, s_name, s_surname, phone, email, birth, age, college, level) "
                 + "VALUES(?,?,?,?,?,?,?,?,?)";
 
         try {
@@ -103,9 +102,9 @@ public class CRUD
             pst.setInt(1, st.getId());
             pst.setString(2, st.getName());
             pst.setString(3, st.getSurname());
-            pst.setString(4, st.getPhone());
-            pst.setDate(5, Date.valueOf(st.getBirth()));
-            pst.setString(6, st.getEmail());            
+            pst.setString(4, st.getPhone());            
+            pst.setString(5, st.getEmail());    
+            pst.setDate(6, Date.valueOf(st.getBirth()));
             pst.setInt(7, st.getAge());
             pst.setString(8, st.getCollege());
             pst.setString(9, st.getLevel());
@@ -119,13 +118,14 @@ public class CRUD
                 //JOptionPane.showMessageDialog(null, "Error");
                 System.out.println("Error");
             }
-            
+            con.commit();
             con.close();
     
         } catch (Exception e) {
             System.err.println(e);
         }
 
+        
 
     }
 
