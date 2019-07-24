@@ -60,7 +60,7 @@ public class Student extends Person {
         this.age = age;
         this.college = college;
         this.level = level;
-        this.parent = parent;
+        this.parent = new Parent();
     }
 
     public int getId() {

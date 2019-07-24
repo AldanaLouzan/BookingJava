@@ -6,20 +6,23 @@ import java.util.Date;
  *
  * @author Aldana
  */
-public class Class {
+public class Classes {
+
     private int idClass;
     private Date date;
     private int time;
     private String type;
+    private int quantityStudents;
 
-    public Class() {
+    public Classes() {
     }
 
-    public Class(int id, Date date, int time, String type) {
-        this.idClass = id;
+    public Classes(int idClass, Date date, int time, String type, int quantityStudents) {
+        this.idClass = idClass;
         this.date = date;
         this.time = time;
         this.type = type;
+        this.quantityStudents = quantityStudents;
     }
 
     public int getId() {
@@ -53,8 +56,14 @@ public class Class {
     public void setType(String type) {
         this.type = type;
     }
-    
-    
-    
+
+    public int getQuantityStudents() {
+        return quantityStudents;
+    }
+
+    public void setQuantityStudents(int quantityStudents) {
+        this.quantityStudents = quantityStudents;
+    }
+
     
 }

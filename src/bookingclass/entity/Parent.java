@@ -29,7 +29,7 @@ public class Parent extends Person {
         this.phone = phone;
     }
 
-    public int getIdParent() {
+    public int getIdParent() {        
         return idParent;
     }
 

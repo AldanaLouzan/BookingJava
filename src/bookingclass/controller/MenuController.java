@@ -1,141 +1,256 @@
 package bookingclass.controller;
 
-import dao.StudentDaoImpl;
-import bookingclass.connectionDb.DBConnection;
+import bookingclass.entity.Classes;
 import bookingclass.entity.Parent;
 import bookingclass.entity.Student;
-import java.sql.Connection;
+import bookingclass.view.Menu;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.Period;
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 import viewInterface.User;
-
 
 /**
  *
  * @author Aldana
  */
 public class MenuController implements User {
-    
-    //StudentController sc = new StudentController();
-    
-    StudentController sc = new StudentController ();
 
-    Scanner scan = new Scanner(System.in);    
+    //Variables to manage the interaction with user
+    String choice = null;
+    Scanner scan = new Scanner(System.in);
+    
+    StudentController sc = new StudentController();
+    ParentController pc = new ParentController();
+    ClassController cCon = new ClassController();
     
 
     @Override
-    public void registration () throws ParseException{
-        Student st = new Student(); 
+    //----Registration new User----//
+    public void registration() throws ParseException {
+        //Will need a Student and Parent object
+        Student st = new Student();
         Parent p = new Parent();
         
+        //Variables to register a new Student
         String name, surname, phone, birth, college, level, email, pass;
         int age;
         Date bdate;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        
+
+        //----Registration form----//
         System.out.println("Please complete the following fields");
-        
+
         System.out.println("> Name: ");
         name = scan.nextLine();
         st.setName(name);
-        
+
         System.out.println("> Surname: ");
         surname = scan.nextLine();
         st.setSurname(surname);
-        
+
         System.out.println("> Birth date (yyyy-MM-dd): ");
         birth = scan.nextLine();
         bdate = sdf.parse(birth);
         st.setBirth(birth);
-        age = this.CalculateAge(bdate);
+        age = sc.CalculateAge(bdate);   //Method to calculate the age
         st.setAge(age);
-        if (age < 18){
+        
+        //Requesting Parent details
+        if (age < 18) {
             p = this.parentDetails();
+            pc.registerParent(p);
+
             st.setParent(p);
         }
-        
+
         System.out.println("> Phone number: ");
         phone = scan.nextLine();
         st.setPhone(phone);
-        
+
         System.out.println("> College: ");
         college = scan.nextLine();
         st.setCollege(college);
-        
+
         System.out.println("> Level: ");
         level = scan.nextLine();
         st.setLevel(level);
-        
+
         System.out.println("> E-mail: ");
         email = scan.nextLine();
         st.setEmail(email);
-        
+
         System.out.println("> Password: ");
         pass = scan.nextLine();
         st.setPassword(pass);
-        
-        
-        //sc.StudentTable(st);
-        sc.registerStudent(st);
-     
-    }
-    
-    public int CalculateAge (Date bdate) throws ParseException{
-        int age;
-        
-        Calendar c = Calendar.getInstance();
-        c.setTime(bdate);
-        int year = c.get(Calendar.YEAR);
-        int month = c.get(Calendar.MONTH) + 1;
-        int date = c.get(Calendar.DATE);
-        LocalDate birth = LocalDate.of(year, month, date);
-        LocalDate current = LocalDate.now();
-        Period diff = Period.between(birth, current);
-        age = diff.getYears();
 
-        return age;
-        
+        sc.registerStudent(st); //Calling controller to register Student
+
     }
-    
-    public Parent parentDetails(){
+
+    //Parent details form
+    public Parent parentDetails() {
+        
         Parent p = new Parent();
         String parentName, parentSurname, parentPhone;
-        
+
+      
         System.out.println("As you are under 18 we need your parent detail");
-        
+
         System.out.println("> Name: ");
         parentName = scan.nextLine();
         p.setName(parentName);
-        
+
         System.out.println("> Surname: ");
         parentSurname = scan.nextLine();
         p.setSurname(parentSurname);
-        
+
         System.out.println("> Phone: ");
         parentPhone = scan.nextLine();
         p.setPhone(parentPhone);
-        
+
+        pc.assignParentID(p);   //Defining a parent ID
+
         return p;
-        
-        
     }
-    
-    public void logIn(){
-        System.out.print("User Name: ");
-        System.out.print("Password: ");
-    
+
+    //Login, checking password
+    public void logIn(String email, String pass) throws ParseException {
+        boolean check = sc.checkUser(email, pass);
+        if (check == true) {
+            this.privatePageNav();   //Giving access to the private page
+        } else {
+            System.out.println("Your password is incorrect");
+            new Menu();
+        }
     }
-    
-    public void logInMenu(){
+
+    //----Private page Nav Bar----//
+    public void privatePageNav() throws ParseException {
+        //NavBar
         System.out.println("Please select an option");
         System.out.println("1) Metodology");
-        System.out.println("2) Book a class");
+        System.out.println("2) MyAccount");
         System.out.println("3) Log Out");
+
+        do {
+            choice = scan.nextLine();
+            switch (choice) {
+                case "1": {
+                    System.out.println("Emily is the best teacher");
+                    break;
+                }
+                case "2": {
+                    myAccount();    //Access to user Account
+                    break;
+                }
+                case "3": {
+                    new Menu();
+                    break;
+                }
+                default: {
+                    System.out.println("You chose and invalid option. Please, try again");
+                    new Menu();
+                    break;
+                }
+            }
+
+        } while (!choice.equals("7")); // end of loop do-while
+
+    }
+
+    //----My Account Nav Bar----//
+    public void myAccount() throws ParseException {
+        System.out.println("Please select an option");
+        System.out.println("1) Check my bookings");
+        System.out.println("2) Book a class");
+
+        do {
+            choice = scan.nextLine();
+            switch (choice) {
+                case "1": {
+                    System.out.println("This are your future bookings");
+                    break;
+                }
+                case "2": {
+                    bookForm(); //Calling the Book Form menu
+                    break;
+                }
+                default: {
+                    System.out.println("You chose and invalid option. Please, try again");
+                    new Menu();
+                    break;
+                }
+            }
+
+            break;
+        } while (!choice.equals("7")); // end of loop do-while
+
     }
     
+    //----Booking Form----//
+    public void bookForm() throws ParseException {
+        Classes c = new Classes();
+        ArrayList<Integer> timeAvailable = new ArrayList();
+        
+        chooseClassType(c); //Select Class type
+        chooseDate(c);      //Select Day
+        timeAvailable = cCon.classType(c);  //Define Array with time availables that day
+        showTimeAvailable(timeAvailable);   //Show the times
+        
+        
+    }
+
+    //----Select and Set Class Type----//
+    public void chooseClassType(Classes c) throws ParseException {        
+        System.out.println("Please select which type of class you want to book");
+        System.out.println("1) Private");
+        System.out.println("2) Semi-private");
+        System.out.println("3) In-group");
+
+        do {
+            choice = scan.nextLine();
+            switch (choice) {
+                case "1": {
+                    c.setType("private");
+                    break;
+                }
+                case "2": {
+                    c.setType("semi-private");
+                    break;
+                }
+                case "3": {
+                    c.setType("in-group");
+                    break;
+                }
+                default: {
+                    System.out.println("You chose and invalid option. Please, try again");
+                    myAccount();
+                    break;
+                }
+            }
+            break;
+        } while (!choice.equals("7")); // end of loop do-while
+    }
+    
+    //Select and set Class Date
+    public void chooseDate(Classes c) throws ParseException{
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date;
+        
+        System.out.print("Please select a day:");
+        String day = scan.nextLine();
+        date = sdf.parse(day);
+        c.setDate(date);
+        
+    }
+    
+    //Show the time available stored in ArrayList
+    public void showTimeAvailable(ArrayList<Integer> timeAvailable){
+        for (int i = 0; i<timeAvailable.size(); i++){
+            System.out.println((i+1)+") "+timeAvailable.get(i));
+        }
+        
+    }
 }

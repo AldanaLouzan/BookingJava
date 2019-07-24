@@ -11,13 +11,13 @@ public class Slot {
     private String subject;
     private int price;
     private String status;
-    private Class classes;
+    private Classes classes;
     private String comment;
 
     public Slot() {
     }
 
-    public Slot(int id, Student student, String subject, int price, String status, Class classes, String comment) {
+    public Slot(int id, Student student, String subject, int price, String status, Classes classes, String comment) {
         this.idSlot = id;
         this.student = student;
         this.subject = subject;
@@ -67,11 +67,11 @@ public class Slot {
         this.status = status;
     }
 
-    public Class getClasses() {
+    public Classes getClasses() {
         return classes;
     }
 
-    public void setClasses(Class classes) {
+    public void setClasses(Classes classes) {
         this.classes = classes;
     }
 

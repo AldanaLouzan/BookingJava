@@ -5,8 +5,10 @@ import java.sql.*;
  
 public class DBConnection {
 
+    //----Connecion with DataBase: emilyclasses----//
+    
     private static Connection connection = null;
-    private static String url = "jdbc:mysql://localhost:3306/test";
+    private static String url = "jdbc:mysql://localhost:3306/emilyclasses";
     private static String user = "root";
     private static String pass = "";
 
@@ -21,15 +23,7 @@ public class DBConnection {
         } catch (Exception ex) {
             System.out.println("General exception: " + ex.getMessage());
         } 
-        finally {
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException ex) {
-                    System.out.println("Exception closing connection: " + ex);
-                }
-            }
-        }
+      
         return connection;
 
     }

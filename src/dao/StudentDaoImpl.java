@@ -1,85 +1,54 @@
 package dao;
 
-//import static bookingclass.db.DBConnection.getConnection;
+import static bookingclass.connectionDb.DBConnection.getConnection;
 import bookingclass.entity.Student;
 import java.sql.Connection;
 import java.sql.Date;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-
+import java.sql.Statement;
 
 public class StudentDaoImpl
         
 {
-
     PreparedStatement pst;
+    Statement st; 
     ResultSet rs;
     
-    private static Connection connection = null;
-    private static String url = "jdbc:mysql://localhost:3306/emilyclasses";
-    private static String user = "root";
-    private static String pass = "";
-
-    public static Connection getConnection() throws ClassNotFoundException, SQLException {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection(url, user, pass);
-            connection.setAutoCommit(false);
-            System.out.println("Connection successful");
-        } catch (SQLException ex) {
-            System.out.println("Database exception: " + ex.getMessage());
-        } catch (Exception ex) {
-            System.out.println("General exception: " + ex.getMessage());
-        } 
-        /*finally {
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException ex) {
-                    System.out.println("Exception closing connection: " + ex);
-                }
-            }
-        }*/
-        return connection;
-
-    }
-    
+    //----Insert Student under 18----//
     public void insertStudentUnder18(Student st) {
         Connection con = null;
         
-        String sql = "INSERT INTO STUDENT (s_name, s_surname, phone, email, birth, age, college, level, idparent) "
-                + "VALUES(?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO STUDENT (s_name, s_surname, phone, email, birth, age, college, level, idparent, password) "
+                + "VALUES(?,?,?,?,?,?,?,?,?,?)";
 
         try {
             
             con = getConnection();
             pst = con.prepareStatement(sql);
-            
 
-            pst.setInt(1, st.getId());
-            pst.setString(2, st.getName());
-            pst.setString(3, st.getSurname());
-            pst.setString(4, st.getPhone());
-            pst.setString(5, st.getEmail());
-            pst.setDate(6, Date.valueOf(st.getBirth()));
-            pst.setInt(7, st.getAge());
-            pst.setString(8, st.getCollege());
-            pst.setString(9, st.getLevel());
-            pst.setInt(10, st.getParent().getIdParent());
+            pst.setString(1, st.getName());
+            pst.setString(2, st.getSurname());
+            pst.setString(3, st.getPhone());
+            pst.setString(4, st.getEmail());
+            pst.setDate(5, Date.valueOf(st.getBirth()));
+            pst.setInt(6, st.getAge());
+            pst.setString(7, st.getCollege());
+            pst.setString(8, st.getLevel());
+            pst.setInt(9, st.getParent().getIdParent());
+            pst.setString(10, st.getPassword());
             
             int res = pst.executeUpdate();
             
             if(res > 0){
-                //JOptionPane.showMessageDialog(null, "You have been registered");
                 System.out.println("You have been registered");
             }else{
-                //JOptionPane.showMessageDialog(null, "Error");
                 System.out.println("Error");
             }
             
-            //con.close();
+            con.commit();
+            con.close();
+            
     
         } catch (Exception e) {
             System.err.println(e);
@@ -88,9 +57,10 @@ public class StudentDaoImpl
 
     }
     
+    //----Insert Student Over 18, without paretn details----//
         public void insertStudentOver18(Student st) {
         Connection con = null;
-        String sql = "INSERT INTO STUDENT (idstudent, s_name, s_surname, phone, email, birth, age, college, level) "
+        String sql = "INSERT INTO STUDENT (age, birth, college, email, level, phone, s_name, s_surname, password) "
                 + "VALUES(?,?,?,?,?,?,?,?,?)";
 
         try {
@@ -98,36 +68,56 @@ public class StudentDaoImpl
             con = getConnection();
             pst = con.prepareStatement(sql);
             
-
-            pst.setInt(1, st.getId());
-            pst.setString(2, st.getName());
-            pst.setString(3, st.getSurname());
-            pst.setString(4, st.getPhone());            
-            pst.setString(5, st.getEmail());    
-            pst.setDate(6, Date.valueOf(st.getBirth()));
-            pst.setInt(7, st.getAge());
-            pst.setString(8, st.getCollege());
-            pst.setString(9, st.getLevel());
+            pst.setInt(1, st.getAge());
+            pst.setDate(2, Date.valueOf(st.getBirth()));
+            pst.setString(3, st.getCollege());
+            pst.setString(4, st.getEmail());
+            pst.setString(5, st.getLevel());
+            pst.setString(6, st.getPhone()); 
+            pst.setString(7, st.getName());
+            pst.setString(8, st.getSurname());
+            pst.setString(9, st.getPassword());
            
             int res = pst.executeUpdate();
             
             if(res > 0){
-                //JOptionPane.showMessageDialog(null, "You have been registered");
-                System.out.println("You have been registered");
+                 System.out.println("You have been registered");
             }else{
-                //JOptionPane.showMessageDialog(null, "Error");
                 System.out.println("Error");
             }
+            
             con.commit();
             con.close();
     
         } catch (Exception e) {
             System.err.println(e);
         }
-
         
-
+        
     }
-
+        
+        //Request password
+        public String checkPass (String email){
+        String pass = null;
+        Connection con = null;
+        String sql = "SELECT password FROM student WHERE email = '"+email+"';";
+        
+        try{
+            con = getConnection();
+            st = con.createStatement();
+            rs = st.executeQuery(sql);
+            while (rs.next()){
+                pass = rs.getString("password");
+            }
+            con.commit();
+            con.close();
+            
+        }catch (Exception e) {
+            System.err.println(e);
+        }
+        return pass;
+            
+        }
+        
 
 }

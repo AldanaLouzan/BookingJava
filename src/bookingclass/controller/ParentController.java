@@ -2,37 +2,25 @@
 package bookingclass.controller;
 
 import bookingclass.entity.Parent;
-import bookingclass.entity.Student;
-import java.util.HashMap;
-import java.util.Map;
+import dao.ParentDaoImpl;
 
 public class ParentController 
-{
+{   
+    private static int count = 0;
+    ParentDaoImpl data = new ParentDaoImpl();
     
-    Map<Integer, Parent> parentRegistered = new HashMap();
-    
-    public void parentTable(Parent p) {
-
-    if(p.getIdParent() == 0) {
-        int parentID = this.parentID();
-        p.setIdParent(parentID);
+    public void registerParent (Parent p){
+        data.insertParent(p);
 
     }
-    parentRegistered.put(p.getIdParent(), p);
 
-}
-
-    public int parentID() {
-        int tempID = (int) (Math.random() * 2000 + 1000);
-        int ID = 0;
-        if (parentRegistered.containsKey(tempID) == true) {
-            tempID = (int) (Math.random() * 2000 + 1000);
-            ID = tempID;
-        } else {
-            ID = tempID;
-        }
-
-        return ID;
-
+    //Autoincrement parentID defined previous to inserting into database
+    public void assignParentID (Parent p){
+        int id;
+        id = ++count;
+        p.setIdParent(id);
+        count = id;
     }
-}
+    
+    
+ }
