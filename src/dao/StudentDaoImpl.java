@@ -46,7 +46,7 @@ public class StudentDaoImpl
                 System.out.println("Error");
             }
             
-            con.commit();
+            //con.commit();
             con.close();
             
     
@@ -86,7 +86,7 @@ public class StudentDaoImpl
                 System.out.println("Error");
             }
             
-            con.commit();
+            //con.commit();
             con.close();
     
         } catch (Exception e) {
@@ -109,7 +109,7 @@ public class StudentDaoImpl
             while (rs.next()){
                 pass = rs.getString("password");
             }
-            con.commit();
+            //con.commit();
             con.close();
             
         }catch (Exception e) {

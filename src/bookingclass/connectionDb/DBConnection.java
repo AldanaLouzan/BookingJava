@@ -16,7 +16,7 @@ public class DBConnection {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection(url, user, pass);
-            connection.setAutoCommit(false);
+            //connection.setAutoCommit(false);
             System.out.println("Connection successful");
         } catch (SQLException ex) {
             System.out.println("Database exception: " + ex.getMessage());

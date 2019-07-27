@@ -35,7 +35,7 @@ public class ParentDaoImpl {
                 System.out.println("Error");
             }
             
-            con.commit();
+            //con.commit();
             
             con.close();
             

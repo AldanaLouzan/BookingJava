@@ -9,5 +9,6 @@ import bookingclass.entity.Student;
 public interface IStudentDao {
     public void insertStudentUnder18(Student st);
     public void insertStudentOver18(Student st);
+    public String checkPass (String email);
     
 }

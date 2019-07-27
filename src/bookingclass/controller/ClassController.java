@@ -13,9 +13,9 @@ public class ClassController {
     ClassesDaoImpl data = new ClassesDaoImpl();
     
     //Store time available for the type of class and date selected
-    public ArrayList<Integer> classType(Classes c){
+    public ArrayList<Classes> classType(Classes c){
         
-        ArrayList <Integer> timeAvailable = new ArrayList();
+        ArrayList <Classes> timeAvailable = new ArrayList();
         String classType = c.getType();
         
         if (classType == "private" || classType == "in-group"){
@@ -25,6 +25,24 @@ public class ClassController {
             timeAvailable = data.selectSemiprivateClass(c.getDate());   //Select if class = semiprivate
         }
         return timeAvailable;
+        
+    }
+    
+    public void bookClass (Classes c){
+        data.book(c);
+        System.out.println("Your class has been booked");
+        System.out.println("And your booking ID is: ");
+    }
+    
+    public void quantityStudents(Classes c){
+        if(c.getType()== "private"){
+            data.insertQuantityStudents(c, 1);
+        }else if (c.getType() == "semiprivate"){
+            int previousQuantity = c.getQuantityStudents();
+            data.insertQuantityStudents(c, previousQuantity++);
+        }else{
+            
+        }
         
     }
     

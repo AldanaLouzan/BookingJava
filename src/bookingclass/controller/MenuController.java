@@ -9,17 +9,18 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
-import viewInterface.User;
+import viewInterface.IView;
 
 /**
  *
  * @author Aldana
  */
-public class MenuController implements User {
+public class MenuController implements IView {
 
     //Variables to manage the interaction with user
     String choice = null;
     Scanner scan = new Scanner(System.in);
+    Scanner kb = new Scanner(System.in);
     
     StudentController sc = new StudentController();
     ParentController pc = new ParentController();
@@ -27,7 +28,7 @@ public class MenuController implements User {
     
 
     @Override
-    //----Registration new User----//
+    //----Registration new IView----//
     public void registration() throws ParseException {
         //Will need a Student and Parent object
         Student st = new Student();
@@ -119,7 +120,7 @@ public class MenuController implements User {
     public void logIn(String email, String pass) throws ParseException {
         boolean check = sc.checkUser(email, pass);
         if (check == true) {
-            this.privatePageNav();   //Giving access to the private page
+            privatePageNav();   //Giving access to the private page
         } else {
             System.out.println("Your password is incorrect");
             new Menu();
@@ -192,13 +193,13 @@ public class MenuController implements User {
     //----Booking Form----//
     public void bookForm() throws ParseException {
         Classes c = new Classes();
-        ArrayList<Integer> timeAvailable = new ArrayList();
+        ArrayList<Classes> timeAvailable = new ArrayList();
         
         chooseClassType(c); //Select Class type
         chooseDate(c);      //Select Day
         timeAvailable = cCon.classType(c);  //Define Array with time availables that day
-        showTimeAvailable(timeAvailable);   //Show the times
-        
+        showTimeAvailable(timeAvailable, c);   //Show the times and Set time chosen
+        cCon.bookClass(c);
         
     }
 
@@ -217,11 +218,14 @@ public class MenuController implements User {
                     break;
                 }
                 case "2": {
-                    c.setType("semi-private");
+                    c.setType("semiprivate");
                     break;
                 }
                 case "3": {
-                    c.setType("in-group");
+                    System.out.println("How many friends are coming with you?");
+                    int groupQuantity = kb.nextInt();
+                    c.setType("ingroup");
+                    c.setQuantityStudents(groupQuantity);
                     break;
                 }
                 default: {
@@ -246,11 +250,20 @@ public class MenuController implements User {
         
     }
     
-    //Show the time available stored in ArrayList
-    public void showTimeAvailable(ArrayList<Integer> timeAvailable){
+    //Show the time available stored in ArrayList and Set the time and ID to the class
+    @Override
+    public void showTimeAvailable(ArrayList<Classes> timeAvailable, Classes c){
         for (int i = 0; i<timeAvailable.size(); i++){
-            System.out.println((i+1)+") "+timeAvailable.get(i));
+            System.out.println((i+1)+") "+timeAvailable.get(i).getTime());
         }
         
+        System.out.println("Please select a time");
+        int choice = kb.nextInt();
+        int timeChosen = timeAvailable.get(choice-1).getTime();
+        int IDClassChosen = timeAvailable.get(choice-1).getId();
+        int quantityStudents = timeAvailable.get(choice-1).getQuantityStudents();
+        c.setTime(timeChosen);  //Set time chosen
+        c.setId(IDClassChosen); //Set the ID of the class chosen
+        c.setQuantityStudents(quantityStudents);    //Set quantity Students of the class chosen    
     }
 }
