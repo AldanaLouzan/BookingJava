@@ -2,14 +2,14 @@ package dao;
 
 import static bookingclass.connectionDb.DBConnection.getConnection;
 import bookingclass.entity.Student;
+import iDao.IStudentDao;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class StudentDaoImpl
-        
+public class StudentDaoImpl implements IStudentDao
 {
     PreparedStatement pst;
     Statement st; 
@@ -96,10 +96,39 @@ public class StudentDaoImpl
         
     }
         
+        //check User
+        public boolean checkUser (String email){
+        Connection con = null;
+        String registeredUser = null;
+        
+        String sql = "SELECT email FROM student WHERE email = '"+email+"';";
+        
+        try{
+            con = getConnection();
+            st = con.createStatement();
+            rs = st.executeQuery(sql);
+        while (rs.next()){
+                registeredUser = rs.getString("email");
+                if (email.equals(registeredUser)){
+                    return true;
+                }else{
+                    con.close();
+                }
+            }    
+
+            
+            
+        }catch (Exception e) {
+            System.err.println(e);
+        }
+        return false;
+            
+        }
         //Request password
         public String checkPass (String email){
-        String pass = null;
         Connection con = null;
+        String pass = null;
+        
         String sql = "SELECT password FROM student WHERE email = '"+email+"';";
         
         try{
@@ -109,13 +138,36 @@ public class StudentDaoImpl
             while (rs.next()){
                 pass = rs.getString("password");
             }
-            //con.commit();
+
             con.close();
             
         }catch (Exception e) {
             System.err.println(e);
         }
         return pass;
+            
+        }
+        
+        public int selectStudentID(String email){
+            int studentID = 0;
+            Connection con = null;
+            String sql = "SELECT idstudent FROM student WHERE email = '"+email+"';";
+        
+        try{
+            con = getConnection();
+            st = con.createStatement();
+            rs = st.executeQuery(sql);
+            while (rs.next()){
+                studentID = rs.getInt("idstudent");
+            }
+            //con.commit();
+            con.close();
+            
+        }catch (Exception e) {
+            System.err.println(e);
+        }
+            
+        return studentID;
             
         }
         

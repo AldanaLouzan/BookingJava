@@ -8,6 +8,6 @@ import bookingclass.entity.Parent;
  */
 public interface IParentDao {
     
-    public void insertParent(Parent p);
-    
+   public void insertParent(Parent p);
+       
 }
